@@ -6,5 +6,5 @@
 
 The ippsample commands are in the container's `$PATH`, so you can run them like this:
 ```bash
-docker run --rm ghcr.io/benpueschel/ippsample-docker ippserver --help
+docker run --rm ghcr.io/benpueschel/ippsample-docker:main ippserver --help
 ```
