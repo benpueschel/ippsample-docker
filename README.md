@@ -10,6 +10,7 @@ docker run --rm -p 8000:8000 ghcr.io/benpueschel/ippsample-docker:main ippserver
 ```
 
 To configure DNS-SD (using Avahi), you need to pass environment variables to the container as explained in the [flungo/avahi Docker image](https://github.com/flungo-docker/avahi?tab=readme-ov-file#environment-variables).
+For more information about the available options, see the [avahi-daemon.conf man page](https://manpages.debian.org/stretch/avahi-daemon/avahi-daemon.conf.5.en.html).
 
 For example:
 ```bash
