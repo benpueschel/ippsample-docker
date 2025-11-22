@@ -1,13 +1,7 @@
-FROM debian:13 AS build
+FROM alpine AS build
 
-RUN apt update && \
-    apt install -y git cups gcc make zlib1g-dev openssl libavahi-core-dev libpoppler-dev
-
-RUN apt install -y avahi-utils libavahi-client-dev libavahi-common-dev libavahi-core-dev
-
-RUN apt install -y libssl-dev libssl3
-
-RUN apt install -y avahi-daemon
+RUN apk update
+RUN apk add --no-cache git build-base autoconf automake libtool pkgconf zlib-dev openssl-dev avahi-dev poppler-dev
 
 RUN git -v
 RUN git clone --recursive https://github.com/istopwg/ippsample.git
@@ -17,10 +11,12 @@ RUN ./configure --disable-shared --enable-static --prefix=/ippsample/build
 RUN make -j$(nproc)
 RUN make install
 
-FROM debian:13
+FROM flungo/avahi
 
 COPY --from=build /ippsample/build/ /usr/local/
 
-RUN apt update && \
-    apt install -y cups avahi-daemon openssl
+COPY avahi.sh /opt/avahi.sh
 
+RUN apk add --no-cache dbus
+
+ENTRYPOINT ["/opt/avahi.sh"]
